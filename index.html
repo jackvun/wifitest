@@ -30,13 +30,43 @@ h1 {
     text-shadow: 0 0 10px #00FF00;
 }
 
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
 button {
     padding: 20px 35px;
     font-size: 24px;
+    font-weight: bold;
     border: 3px solid #00FF00;
+    border-radius: 8px;
     background: black;
     color: #00FF00;
     cursor: pointer;
+}
+
+.arrow-left, .arrow-right {
+    font-size: 36px;
+    color: #00FF00;
+    animation: moveArrow 1s infinite alternate;
+}
+
+.arrow-left {
+    transform: rotate(180deg);
+}
+
+@keyframes moveArrow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(10px); }
 }
 
 /* GIF animation */
@@ -62,14 +92,36 @@ button {
 <div class="box">
     <h1>⚠️ AMARAN KERAS ⚠️</h1>
 
-    <p>Jika anda faham, tekan butang di bawah:</p>
+    <p>
+    Perhatian kepada semua pengguna WiFi:<br><br>
 
-    <button onclick="acknowledge()">YA, SAYA FAHAM</button>
+    <b>stafflankayan@2026</b><br><br>
 
-    <!-- GUNA GIF KAU SENDIRI -->
+    WiFi ini adalah <b>KHAS UNTUK STAFF LANKAYAN SAHAJA</b>.<br>
+    Bukan untuk guest atau mana-mana pihak.<br><br>
+
+    <b>INGAT? DILARANG KERAS</b> berkongsi password kepada sesiapa pun KECUALI STAFF LANKAYAN ARASOOO.<br><br>
+
+    Sebarang pelanggaran akan dikenakan tindakan serta-merta:<br>
+    ⛔ BLOCK akses tanpa notis<br>
+    ⛔ Penamatan akses serta-merta<br><br>
+
+    <b>TIADA KOMPROMI</b><br><br>
+
+    <b>Jika anda faham, tekan butang di bawah:</b>
+    </p>
+
+    <div class="button-container">
+        <div class="arrow-left">➡️</div>
+        <button onclick="acknowledge()">YA, SAYA FAHAM</button>
+        <div class="arrow-right">➡️</div>
+    </div>
+
+    <!-- GIF KAU -->
     <img id="thankGif" src="hacker.gif">
 
-    <p>— Dari VUN</p>
+    <br><br>
+    <p>— Dikeluarkan oleh: <b>VUN</b></p>
 </div>
 
 <audio id="thankAudio">
@@ -77,17 +129,22 @@ button {
 </audio>
 
 <script>
+// popup awal
+setTimeout(() => {
+    alert("⚠️ AMARAN KERAS ⚠️\n\nWiFi ini hanya untuk STAFF LANKAYAN sahaja.\n\nJANGAN KONGSI PASSWORD!\n\nJika dikesan → AKSES AKAN DI BLOCK SERTA-MERTA.\n\n— Dari VUN");
+}, 1000);
+
 function acknowledge() {
-    // play audio
+    // audio
     const audio = document.getElementById('thankAudio');
     audio.currentTime = 0;
     audio.play().catch(err => console.log(err));
 
-    // show gif dengan animation
+    // gif animation
     const gif = document.getElementById('thankGif');
     gif.classList.add("show");
 
-    // tukar text
+    // tukar tajuk je (tak delete content lain)
     document.querySelector('h1').innerHTML = "✔️ ACCESS GRANTED";
 }
 </script>
