@@ -16,7 +16,6 @@ body {
     align-items: center;
     height: 100vh;
     text-align: center;
-    overflow: hidden;
 }
 
 .box {
@@ -24,75 +23,36 @@ body {
     padding: 20px;
     border: 2px solid #00FF00;
     box-shadow: 0 0 20px #00FF00;
-    animation: flicker 1s infinite;
-}
-
-@keyframes flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-    20%, 22%, 24%, 55% { opacity: 0.2; }
 }
 
 h1 {
     font-size: 42px;
-    margin-bottom: 20px;
     text-shadow: 0 0 10px #00FF00;
-}
-
-p {
-    font-size: 18px;
-    line-height: 1.6;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 30px;
 }
 
 button {
     padding: 20px 35px;
     font-size: 24px;
-    font-weight: bold;
     border: 3px solid #00FF00;
-    border-radius: 8px;
     background: black;
     color: #00FF00;
     cursor: pointer;
-    text-shadow: 0 0 8px #00FF00;
-    transition: all 0.3s ease;
-    position: relative;
 }
 
-button:hover {
-    background: #00FF00;
-    color: black;
-    text-shadow: none;
-}
-
-.arrow-left, .arrow-right {
-    font-size: 36px;
-    color: #00FF00;
-    animation: moveArrow 1s infinite alternate;
-}
-
-.arrow-left {
-    transform: rotate(180deg);
-}
-
-@keyframes moveArrow {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(10px); }
-}
-
-.gif-container {
+/* GIF animation */
+#thankGif {
+    display: none;
+    width: 320px;
     margin-top: 20px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.6s ease;
 }
-.gif-container img {
-    width: 300px;
-    height: auto;
-    display: none; /* mula-mula GIF tersembunyi */
+
+#thankGif.show {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
 }
 </style>
 </head>
@@ -102,67 +62,33 @@ button:hover {
 <div class="box">
     <h1>⚠️ AMARAN KERAS ⚠️</h1>
 
-    <p>
-    Perhatian kepada semua pengguna WiFi:<br><br>
+    <p>Jika anda faham, tekan butang di bawah:</p>
 
-    <b>stafflankayan@2026</b><br><br>
+    <button onclick="acknowledge()">YA, SAYA FAHAM</button>
 
-    WiFi ini adalah <b>KHAS UNTUK STAFF LANKAYAN SAHAJA</b>.<br>
-    Bukan untuk guest atau mana-mana pihak.<br><br>
+    <!-- GUNA GIF KAU SENDIRI -->
+    <img id="thankGif" src="hacker.gif">
 
-    <b>INGAT? DILARANG KERAS</b> berkongsi password kepada sesiapa pun KECUALI STAFF LANKAYAN ARASOOO.<br><br>
-
-    Sebarang pelanggaran akan dikenakan tindakan serta-merta:<br>
-    ⛔ BLOCK akses tanpa notis<br>
-    ⛔ Penamatan akses serta-merta<br><br>
-
-    <b>TIADA KOMPROMI</b><br><br>
-
-    <b>Jika anda faham, tekan butang di bawah:</b>
-    </p>
-
-    <div class="button-container">
-        <div class="arrow-left">➡️</div>
-        <button onclick="acknowledge()">YA, SAYA FAHAM</button>
-        <div class="arrow-right">➡️</div>
-    </div>
-
-    <div class="gif-container">
-        <img id="thankGif" src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Terima Kasih GIF">
-    </div>
-
-    <br><br>
-    <p>— Dikeluarkan oleh: <b>VUN</b></p>
+    <p>— Dari VUN</p>
 </div>
 
-<!-- Audio -->
 <audio id="thankAudio">
     <source src="sound.mp3" type="audio/mpeg">
 </audio>
 
-<img id="thankGif" src="hacker.gif" style="display:none;">
-
 <script>
-// Popup warning awal
-setTimeout(() => {
-    alert("⚠️ AMARAN KERAS ⚠️\n\nWiFi ini hanya untuk STAFF LANKAYAN sahaja.\n\nJANGAN KONGSI PASSWORD!\n\nJika dikesan → AKSES AKAN DI BLOCK SERTA-MERTA.\n\nTIADA AMARAN.\n\n— Dari VUN");
-}, 1000);
-
-// Function bila staff tekan button
 function acknowledge() {
-    // main audio
+    // play audio
     const audio = document.getElementById('thankAudio');
-    audio.play();
+    audio.currentTime = 0;
+    audio.play().catch(err => console.log(err));
 
-    // tunjuk GIF
+    // show gif dengan animation
     const gif = document.getElementById('thankGif');
-    gif.style.display = "block";
+    gif.classList.add("show");
 
-    // ubah text box utama
-    const box = document.querySelector('.box');
-    box.innerHTML = `<h1>✔️ Terima kasih!</h1>
-                     <p>Anda telah mengesahkan mesej ini dan memberi kerjasama.<br>— Dari VUN</p>
-                     <div class="gif-container"><img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Terima Kasih GIF"></div>`;
+    // tukar text
+    document.querySelector('h1').innerHTML = "✔️ ACCESS GRANTED";
 }
 </script>
 
