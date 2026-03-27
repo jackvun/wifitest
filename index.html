@@ -56,13 +56,10 @@ button {
 
 .arrow-left, .arrow-right {
     font-size: 36px;
-    color: #00FF00;
     animation: moveArrow 1s infinite alternate;
 }
 
-.arrow-left {
-    transform: rotate(180deg);
-}
+.arrow-left { transform: rotate(180deg); }
 
 @keyframes moveArrow {
     0% { transform: translateX(0); }
@@ -84,13 +81,26 @@ button {
     opacity: 1;
     transform: scale(1);
 }
+
+/* typing cursor */
+.cursor {
+    display: inline-block;
+    background: #00FF00;
+    width: 10px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
 <div class="box">
-    <h1>⚠️ AMARAN KERAS ⚠️</h1>
+    <h1 id="title">⚠️ AMARAN KERAS ⚠️</h1>
 
     <p>
     Perhatian kepada semua pengguna WiFi:<br><br>
@@ -117,14 +127,14 @@ button {
         <div class="arrow-right">➡️</div>
     </div>
 
-    <!-- GIF KAU -->
     <img id="thankGif" src="hacker.gif">
 
     <br><br>
-    <p>— Dikeluarkan oleh: <b>VUN</b></p>
+    <p id="footerText">— Dikeluarkan oleh: <b>VUN</b></p>
 </div>
 
-<audio id="thankAudio">
+<!-- AUDIO (IMPORTANT) -->
+<audio id="thankAudio" preload="auto">
     <source src="sound.mp3" type="audio/mpeg">
 </audio>
 
@@ -134,18 +144,48 @@ setTimeout(() => {
     alert("⚠️ AMARAN KERAS ⚠️\n\nWiFi ini hanya untuk STAFF LANKAYAN sahaja.\n\nJANGAN KONGSI PASSWORD!\n\nJika dikesan → AKSES AKAN DI BLOCK SERTA-MERTA.\n\n— Dari VUN");
 }, 1000);
 
+// typing effect
+function typeWriter(element, text, speed = 40) {
+    let i = 0;
+    element.innerHTML = "";
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    element.appendChild(cursor);
+
+    function typing() {
+        if (i < text.length) {
+            element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
+
 function acknowledge() {
-    // audio
+    // AUDIO (fix paling penting)
     const audio = document.getElementById('thankAudio');
+    audio.pause();
     audio.currentTime = 0;
-    audio.play().catch(err => console.log(err));
 
-    // gif animation
-    const gif = document.getElementById('thankGif');
-    gif.classList.add("show");
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            console.log("Audio blocked:", error);
+        });
+    }
 
-    // tukar tajuk je (tak delete content lain)
-    document.querySelector('h1').innerHTML = "✔️ ACCESS GRANTED";
+    // GIF
+    document.getElementById('thankGif').classList.add("show");
+
+    // Tajuk
+    document.getElementById('title').innerHTML = "✔️ ACCESS GRANTED";
+
+    // Typing text
+    typeWriter(
+        document.getElementById('footerText'),
+        "Sekian, terima kasih atas kerjasama anda. — Dari VUN"
+    );
 }
 </script>
 
