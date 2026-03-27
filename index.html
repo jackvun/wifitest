@@ -71,7 +71,6 @@ button:hover {
     text-shadow: none;
 }
 
-/* Arrow kiri dan kanan */
 .arrow-left, .arrow-right {
     font-size: 36px;
     color: #00FF00;
@@ -79,12 +78,21 @@ button:hover {
 }
 
 .arrow-left {
-    transform: rotate(180deg); /* arrow ke kiri */
+    transform: rotate(180deg);
 }
 
 @keyframes moveArrow {
     0% { transform: translateX(0); }
     100% { transform: translateX(10px); }
+}
+
+.gif-container {
+    margin-top: 20px;
+}
+.gif-container img {
+    width: 300px;
+    height: auto;
+    display: none; /* mula-mula GIF tersembunyi */
 }
 </style>
 </head>
@@ -119,9 +127,18 @@ button:hover {
         <div class="arrow-right">➡️</div>
     </div>
 
+    <div class="gif-container">
+        <img id="thankGif" src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Terima Kasih GIF">
+    </div>
+
     <br><br>
     <p>— Dikeluarkan oleh: <b>VUN</b></p>
 </div>
+
+<!-- Audio -->
+<audio id="thankAudio">
+    <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 // Popup warning awal
@@ -131,10 +148,19 @@ setTimeout(() => {
 
 // Function bila staff tekan button
 function acknowledge() {
-    alert("Sekian, terima kasih!\n\n— Dari VUN");
-    document.body.innerHTML = "<h1>✔️ Terima kasih!</h1><p>Anda telah mengesahkan mesej ini dan memberi kerjasama.<br>— Dari VUN</p>";
-    document.body.style.background = "#001100";
-    document.body.style.color = "#00FF00";
+    // main audio
+    const audio = document.getElementById('thankAudio');
+    audio.play();
+
+    // tunjuk GIF
+    const gif = document.getElementById('thankGif');
+    gif.style.display = "block";
+
+    // ubah text box utama
+    const box = document.querySelector('.box');
+    box.innerHTML = `<h1>✔️ Terima kasih!</h1>
+                     <p>Anda telah mengesahkan mesej ini dan memberi kerjasama.<br>— Dari VUN</p>
+                     <div class="gif-container"><img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Terima Kasih GIF"></div>`;
 }
 </script>
 
